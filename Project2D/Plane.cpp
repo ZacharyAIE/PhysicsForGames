@@ -30,3 +30,17 @@ void Plane::draw()
 void Plane::resetPosition()
 {
 }
+
+void Plane::resolveCollision(Rigidbody* actor2)
+{
+	glm::vec2 normal = m_normal;
+	glm::vec2 relativeVelocity = actor2->getVelocity();
+
+	float elasticity = 1;
+	float j = glm::dot(-(1 + elasticity) * (relativeVelocity), normal) * actor2->getMass();
+
+	glm::vec2 force = normal * j;
+
+	actor2->applyForce(force);
+
+}

@@ -46,6 +46,7 @@ void PhysicsScene::update(float dt)
 
 		checkForCollision();
 		
+		
 	}
 }
 
@@ -73,7 +74,7 @@ bool PhysicsScene::sphere2Plane(PhysicsObject* obj1, PhysicsObject* obj2)
 		if (intersection > 0 && velocityOutOfPlane < 0)
 		{
 			//set sphere velocity to zero here 
-			sphere->applyForce(-sphere->getVelocity() * sphere->getMass());
+			plane->resolveCollision(sphere);
 			return true;
 		}
 	}

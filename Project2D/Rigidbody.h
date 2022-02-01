@@ -1,5 +1,6 @@
 #pragma once
 #include "PhysicsObject.h"
+#include <iostream>
 
 class Rigidbody : public PhysicsObject
 {
@@ -14,6 +15,7 @@ public:
     glm::vec2 getPosition() { return m_position; }
     float getOrientatation() { return m_orientation; }
     glm::vec2 getVelocity() { return m_velocity; }
+    float getKineticEnergy();
     float getMass() { return m_mass; }
     void resolveCollision(Rigidbody* actor2);
 

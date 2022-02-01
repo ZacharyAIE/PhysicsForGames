@@ -25,6 +25,12 @@ void Rigidbody::applyForceToActor(Rigidbody* actor2, glm::vec2 force)
 	applyForce(-force);
 }
 
+float Rigidbody::getKineticEnergy()
+{
+	.5 * m_mass * glm::dot(m_velocity, m_velocity);
+	return 0.0f;
+}
+
 void Rigidbody::resolveCollision(Rigidbody* actor2)
 {
 	glm::vec2 normal = glm::normalize(actor2->getPosition() - m_position);
@@ -36,6 +42,15 @@ void Rigidbody::resolveCollision(Rigidbody* actor2)
 
 	glm::vec2 force = normal * j;
 
+	float kePre = getKineticEnergy() + actor2->getKineticEnergy();
+
 	applyForceToActor(actor2, force);
+
+	float kePost = getKineticEnergy() + actor2->getKineticEnergy();
+
+	float deltaKE = kePost - kePre;
+	if (deltaKE > kePost * 0.01f)
+		std::cout << "Kinetic Energy discrepancy greater than 1% detected!!";
+
 }
 
