@@ -28,8 +28,8 @@ bool Application2D::startup() {
 	m_physicsScene->setTimeStep(0.01f);
 
 
-	Sphere* ball1 = new Sphere(glm::vec2(0, 10), glm::vec2(0, 10), 4.0f, 3, glm::vec4(1, 0, 0, 1));
-	Sphere* ball2 = new Sphere(glm::vec2(0, 0), glm::vec2(0, 0), 4.0f, 3, glm::vec4(0, 1, 0, 1));
+	Sphere* ball1 = new Sphere(glm::vec2(10, 0), glm::vec2(-30, 0), 4.0f, 3, glm::vec4(1, 0, 0, 1));
+	Sphere* ball2 = new Sphere(glm::vec2(-10, 0), glm::vec2(30, 0), 4.0f, 3, glm::vec4(0, 1, 0, 1));
 	Plane* plane1 = new Plane(glm::vec2(0, 1), -40);
 
 	m_physicsScene->addActor(ball1);
