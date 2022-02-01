@@ -27,7 +27,7 @@ bool Application2D::startup() {
 	m_physicsScene->setGravity(glm::vec2(0, 0));
 	m_physicsScene->setTimeStep(0.01f);
 
-	Sphere* ball1 = new Sphere(glm::vec2(40, 0), glm::vec2(-30, 0), 4.0f, 3, glm::vec4(1, 0, 1, 1));
+	/*Sphere* ball1 = new Sphere(glm::vec2(40, 0), glm::vec2(-30, 0), 4.0f, 3, glm::vec4(1, 0, 1, 1));
 	Sphere* ball2 = new Sphere(glm::vec2(20, 0), glm::vec2(0, 0), 4.0f, 3, glm::vec4(1, 0, 0, 1));
 	Sphere* ball3 = new Sphere(glm::vec2(-20, 0), glm::vec2(0, 0), 4.0f, 3, glm::vec4(1, 1, 0, 1));
 	Sphere* ball4 = new Sphere(glm::vec2(-40, 0), glm::vec2(30, 0), 4.0f, 3, glm::vec4(0, 1, 0, 1));
@@ -35,7 +35,17 @@ bool Application2D::startup() {
 	Sphere* ball5 = new Sphere(glm::vec2(0, 40), glm::vec2(0, -30), 4.0f, 3, glm::vec4(1, 0, 1, 1));
 	Sphere* ball6 = new Sphere(glm::vec2(0, 20), glm::vec2(0, 0), 4.0f, 3, glm::vec4(1, 0, 0, 1));
 	Sphere* ball7 = new Sphere(glm::vec2(0, -20), glm::vec2(0, 0), 4.0f, 3, glm::vec4(1, 1, 0, 1));
-	Sphere* ball8 = new Sphere(glm::vec2(0, -40), glm::vec2(0, 30), 4.0f, 3, glm::vec4(0, 1, 0, 1));
+	Sphere* ball8 = new Sphere(glm::vec2(0, -40), glm::vec2(0, 30), 4.0f, 3, glm::vec4(0, 1, 0, 1));*/
+
+	Sphere* ball1 = new Sphere(glm::vec2(40, 0), glm::vec2(-30, -30), 4.0f, 3, glm::vec4(1, 0, 1, 1));
+	Sphere* ball2 = new Sphere(glm::vec2(20, 0), glm::vec2(-30, -30), 4.0f, 3, glm::vec4(1, 0, 0, 1));
+	Sphere* ball3 = new Sphere(glm::vec2(-20, 0), glm::vec2(30, 30), 4.0f, 3, glm::vec4(1, 1, 0, 1));
+	Sphere* ball4 = new Sphere(glm::vec2(-40, 0), glm::vec2(30, 30), 4.0f, 3, glm::vec4(0, 1, 0, 1));
+
+	Sphere* ball5 = new Sphere(glm::vec2(0, 40), glm::vec2(-30, -30), 4.0f, 3, glm::vec4(1, 0, 1, 1));
+	Sphere* ball6 = new Sphere(glm::vec2(0, 20), glm::vec2(-30, -30), 4.0f, 3, glm::vec4(1, 0, 0, 1));
+	Sphere* ball7 = new Sphere(glm::vec2(0, -20), glm::vec2(30, 30), 4.0f, 3, glm::vec4(1, 1, 0, 1));
+	Sphere* ball8 = new Sphere(glm::vec2(0, -40), glm::vec2(30, 30), 4.0f, 3, glm::vec4(0, 1, 0, 1));
 
 	Plane* plane1 = new Plane(glm::vec2(0, 1), -40);
 	Plane* plane2 = new Plane(glm::vec2(1, 0), -40);
