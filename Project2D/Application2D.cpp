@@ -27,12 +27,14 @@ bool Application2D::startup() {
 	m_physicsScene->setGravity(glm::vec2(0, -10));
 	m_physicsScene->setTimeStep(0.01f);
 
-	Sphere* ball = new Sphere(glm::vec2(-40, 0), glm::vec2(20, 30), 3.0f, 5, glm::vec4(0, 1, 1, 1));
-	Sphere* ball2 = new Sphere(glm::vec2(40, 0), glm::vec2(-20, 30), 3.0f, 5, glm::vec4(0, 1, 1, 1));
 
+	Sphere* ball1 = new Sphere(glm::vec2(0, 10), glm::vec2(0, 10), 4.0f, 3, glm::vec4(1, 0, 0, 1));
+	Sphere* ball2 = new Sphere(glm::vec2(0, 0), glm::vec2(0, 0), 4.0f, 3, glm::vec4(0, 1, 0, 1));
+	Plane* plane1 = new Plane(glm::vec2(0, 1), -40);
 
-	m_physicsScene->addActor(ball);
+	m_physicsScene->addActor(ball1);
 	m_physicsScene->addActor(ball2);
+	m_physicsScene->addActor(plane1);
 
 	return true;
 }

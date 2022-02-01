@@ -4,6 +4,7 @@
 #include <vector>
 #include "PhysicsObject.h"
 #include "Sphere.h"
+#include "Plane.h"
 
 class PhysicsScene
 {
@@ -21,7 +22,13 @@ public:
 
 	void setTimeStep(const float timeStep) { m_timeStep = timeStep; }
 	float getTimeStep() const { return m_timeStep; }
-	static bool sphere2Sphere(PhysicsObject*, PhysicsObject*);
+
+	static bool plane2Plane(PhysicsObject* obj1, PhysicsObject* obj2) { return false; }
+	static bool plane2Sphere(PhysicsObject* obj1, PhysicsObject* obj2);
+	static bool sphere2Plane(PhysicsObject* obj1, PhysicsObject* obj2);
+	static bool sphere2Sphere(PhysicsObject* obj1, PhysicsObject* obj2);
+
+	void checkForCollision();
 
 protected:
 	glm::vec2 m_gravity;

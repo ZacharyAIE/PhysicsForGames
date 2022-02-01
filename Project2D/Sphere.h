@@ -1,5 +1,6 @@
 #pragma once
 #include "Rigidbody.h"
+#include "Gizmos.h"
 #include <glm/vec4.hpp>
 
 class Sphere :
