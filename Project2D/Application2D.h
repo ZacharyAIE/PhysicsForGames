@@ -8,6 +8,7 @@ class Application2D : public aie::Application {
 public:
 
 	Application2D();
+
 	virtual ~Application2D();
 
 	virtual bool startup();
