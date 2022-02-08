@@ -1,6 +1,8 @@
 #include "PhysicsScene.h"
 
-PhysicsScene::PhysicsScene() : m_timeStep(0.01f), m_gravity(glm::vec2(0, 0))
+glm::vec2 PhysicsScene::m_gravity(0, 0);
+
+PhysicsScene::PhysicsScene() : m_timeStep(0.01f)
 {
 }
 
@@ -46,8 +48,9 @@ void PhysicsScene::update(float dt)
 
 		checkForCollision();
 		
-		
+		std::cout << getTotalEnergy() << std::endl;
 	}
+	 
 }
 
 void PhysicsScene::draw()
@@ -55,6 +58,17 @@ void PhysicsScene::draw()
 	for (auto pActor : m_actors) {
 		pActor->draw();
 	}
+}
+
+float PhysicsScene::getTotalEnergy()
+{
+	float total = 0;
+	for (auto it = m_actors.begin(); it != m_actors.end(); it++)
+	{
+		PhysicsObject* obj = *it;
+		total += obj->getEnergy();
+	}
+	return total;
 }
 
 bool PhysicsScene::sphere2Plane(PhysicsObject* obj1, PhysicsObject* obj2)

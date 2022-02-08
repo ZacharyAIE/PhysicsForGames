@@ -1,21 +1,35 @@
 #include "RigidBody.h"
+#include "PhysicsScene.h"
 
-Rigidbody::Rigidbody(ShapeType shapeID, glm::vec2 position, glm::vec2 velocity, float orientation, float mass, float elasticity) : PhysicsObject(shapeID)
+Rigidbody::Rigidbody(ShapeType shapeID, glm::vec2 position, glm::vec2 velocity, float orientation, float mass, float elasticity, float linearDrag, float angularDrag) : PhysicsObject(shapeID)
 {
     m_position = position;
     m_velocity = velocity;
     m_orientation = orientation;
     m_mass = mass;
 	m_elasticity = elasticity;
-	m_angularVelocity = 1;
+	m_angularVelocity = 0;
+	m_linearDrag = linearDrag;
+	m_angularDrag = angularDrag;
 }
 
 void Rigidbody::fixedUpdate(glm::vec2 gravity, float timeStep)
 {
-	m_position += m_velocity * timeStep;
-	applyForce(gravity * m_mass * timeStep, getPosition());
+	// reduce our linear velocity by a fraction of itself every second
+	m_velocity -= m_velocity * m_linearDrag * timeStep;
+	m_angularVelocity -= m_angularVelocity * m_angularDrag * timeStep;
 
-	m_orientation += m_angularVelocity * timeStep;
+	m_position += m_velocity  * timeStep;
+	m_orientation += m_angularVelocity  * timeStep;
+
+	if (length(m_velocity) < MIN_LINEAR_THRESHOLD) {
+		m_velocity = glm::vec2(0, 0);
+	}
+	if (abs(m_angularVelocity) < MIN_ANGULAR_THRESHOLD) {
+		m_angularVelocity = 0;
+	}
+
+	applyForce(gravity * m_mass * timeStep, glm::vec2(0,0));
 }
 
 void Rigidbody::applyForce(glm::vec2 force, glm::vec2 pos)
@@ -27,8 +41,12 @@ void Rigidbody::applyForce(glm::vec2 force, glm::vec2 pos)
 
 float Rigidbody::getKineticEnergy()
 {
-	return 0.5f * (m_mass * glm::dot(m_velocity, m_velocity) +
-		m_moment * m_angularVelocity * m_angularVelocity);
+	return 0.5f * (m_mass * glm::dot(m_velocity, m_velocity) + m_moment * m_angularVelocity * m_angularVelocity);
+}
+
+float Rigidbody::getPotentialEnergy()
+{
+	return -getMass() * glm::dot(PhysicsScene::getGravity(), m_position);
 }
 
 void Rigidbody::resolveCollision(Rigidbody* actor2, glm::vec2 contact,
@@ -60,14 +78,22 @@ void Rigidbody::resolveCollision(Rigidbody* actor2, glm::vec2 contact,
 		float mass1 = 1.0f / (1.0f / m_mass + (r1 * r1) / m_moment);
 		float mass2 = 1.0f / (1.0f / actor2->m_mass + (r2 * r2) / actor2->m_moment);
 
-		float elasticity = 1;
+		float elasticity = (getElasticity() + actor2->getElasticity()) / 2.0f;
 
 		glm::vec2 force = (1.0f + elasticity) * mass1 * mass2 /
 			(mass1 + mass2) * (v1 - v2) * normal;
 
+		float energyBefore = this->getKineticEnergy() + actor2->getKineticEnergy();
+
 		//apply equal and opposite forces 
 		applyForce(-force, contact - m_position);
 		actor2->applyForce(force, contact - actor2->m_position);
+
+		float energyAfter = this->getKineticEnergy() + actor2->getKineticEnergy();
+
+		float deltaEnergy = energyAfter - energyBefore;
+		if (fabs(deltaEnergy) > energyBefore * 0.01f)
+			std::cout << "Energy error!!" << std::endl;
 	}
 }
 

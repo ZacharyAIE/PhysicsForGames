@@ -19,7 +19,9 @@ public:
 	void draw();
 
 	void setGravity(const glm::vec2 gravity) { m_gravity = gravity; }
-	glm::vec2 getGravity() const { return m_gravity; }
+	static glm::vec2 getGravity() { return m_gravity; }
+
+	float getTotalEnergy();
 
 	void setTimeStep(const float timeStep) { m_timeStep = timeStep; }
 	float getTimeStep() const { return m_timeStep; }
@@ -39,7 +41,7 @@ public:
 	void checkForCollision();
 
 protected:
-	glm::vec2 m_gravity;
+	static glm::vec2 m_gravity;
 	float m_timeStep;
 	std::vector<PhysicsObject*> m_actors;
 };

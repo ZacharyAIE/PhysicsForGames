@@ -6,10 +6,10 @@ class Box :
     public Rigidbody
 {
 public:
-    Box(glm::vec2 extents, glm::vec2 position, glm::vec2 velocity, float orientation, float mass, float elasticity, glm::vec4 colour);
+    Box(glm::vec2 extents, glm::vec2 position, glm::vec2 velocity, float orientation, float mass, float elasticity, float linearDrag, float angularDrag, glm::vec4 colour);
 
-    void fixedUpdate(glm::vec2 gravity, float timeStep);
-    void draw();
+    virtual void fixedUpdate(glm::vec2 gravity, float timeStep);
+    virtual void draw();
 
     glm::vec2 getExtents() const { return m_extents; }
     glm::vec2 getColour() { return m_colour; }

@@ -1,15 +1,11 @@
 #include "Box.h"
 
-Box::Box(glm::vec2 extents, glm::vec2 position, glm::vec2 velocity, float orientation, float mass, float elasticity, glm::vec4 colour)
-	: Rigidbody(BOX, position, velocity, orientation, mass, elasticity)
+Box::Box(glm::vec2 extents, glm::vec2 position, glm::vec2 velocity, float orientation, float mass, float elasticity, float linearDrag, float angularDrag, glm::vec4 colour)
+	: Rigidbody(BOX, position, velocity, orientation, mass, elasticity, linearDrag, angularDrag)
 {
 	m_extents = extents;
-	m_position = position;
-	m_velocity = velocity;
+	m_moment = 1.0f / 3.0f * mass * extents.x * extents.y;
 	m_angularVelocity = 0;
-	m_orientation = orientation;
-	m_mass = mass;
-	m_elasticity = elasticity;
 	m_colour = colour;
 }
 

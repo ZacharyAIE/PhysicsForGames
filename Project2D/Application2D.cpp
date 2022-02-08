@@ -29,17 +29,18 @@ bool Application2D::startup() {
 	
 
 	//Spawn Spheres
-	/*m_physicsScene->addActor(new Sphere(glm::vec2(40, 0), glm::vec2(-30, -30), 10.0f, 3, 1, glm::vec4(1, 0, 1, 1)));
-	m_physicsScene->addActor(new Sphere(glm::vec2(20, 0), glm::vec2(-30, -30), 10.0f, 3, 1, glm::vec4(1, 0, 0, 1)));
-	m_physicsScene->addActor(new Sphere(glm::vec2(-20, 0), glm::vec2(30, 30), 10.0f, 3, 1, glm::vec4(1, 1, 0, 1)));
-	m_physicsScene->addActor(new Sphere(glm::vec2(-40, 0), glm::vec2(30, 30), 10.0f, 3, 1, glm::vec4(0, 1, 0, 1)));
+	m_physicsScene->addActor(new Sphere(glm::vec2(40, 0), glm::vec2(-30, -30), 10.0f, 3, 1, 0, 0, glm::vec4(1, 0, 1, 1)));
+	m_physicsScene->addActor(new Sphere(glm::vec2(20, 0), glm::vec2(-30, -30), 10.0f, 3, 1, 0, 0, glm::vec4(1, 0, 0, 1)));
+	m_physicsScene->addActor(new Sphere(glm::vec2(-20, 0), glm::vec2(30, 30), 10.0f, 3, 1, 0, 0, glm::vec4(1, 1, 0, 1)));
+	m_physicsScene->addActor(new Sphere(glm::vec2(-40, 0), glm::vec2(30, 30), 10.0f, 3, 1, 0, 0, glm::vec4(0, 1, 0, 1)));
 
-	m_physicsScene->addActor(new Sphere(glm::vec2(0, 40), glm::vec2(-30, -30), 10.0f, 3, 1, glm::vec4(1, 0, 1, 1)));
-	m_physicsScene->addActor(new Sphere(glm::vec2(0, 20), glm::vec2(-30, -30), 10.0f, 3, 1, glm::vec4(1, 0, 0, 1)));
-	m_physicsScene->addActor(new Sphere(glm::vec2(0, -20), glm::vec2(30, 30), 10.0f, 3, 1, glm::vec4(1, 1, 0, 1)));
-	m_physicsScene->addActor(new Sphere(glm::vec2(0, -40), glm::vec2(30, 30), 10.0f, 3, 1, glm::vec4(0, 1, 0, 1)));*/
+	m_physicsScene->addActor(new Sphere(glm::vec2(0, 40), glm::vec2(-30, -30), 10.0f, 3, 1, 0, 0, glm::vec4(1, 0, 1, 1)));
+	m_physicsScene->addActor(new Sphere(glm::vec2(0, 20), glm::vec2(-30, -30), 10.0f, 3, 1, 0, 0, glm::vec4(1, 0, 0, 1)));
+	m_physicsScene->addActor(new Sphere(glm::vec2(0, -20), glm::vec2(30, 30), 10.0f, 3, 1, 0, 0, glm::vec4(1, 1, 0, 1)));
+	m_physicsScene->addActor(new Sphere(glm::vec2(0, -40), glm::vec2(30, 30), 10.0f, 3, 1, 0, 0, glm::vec4(0, 1, 0, 1)));
 
-	m_physicsScene->addActor(new Box(glm::vec2(3, 3), glm::vec2(0, 0), glm::vec2(0, 0), 45, 10, 1, glm::vec4(0, 1, 0, 1)));
+	m_physicsScene->addActor(new Box(glm::vec2(3, 3), glm::vec2(0, 0), glm::vec2(0, 0), 45, 10, 1, .3f, .3f, glm::vec4(0, 1, 0, 1)));
+	m_physicsScene->addActor(new Box(glm::vec2(3, 3), glm::vec2(0, 8), glm::vec2(0, 0), 45, 10, 1, .3f, .3f, glm::vec4(0, 1, 0, 1)));
 
 	//Spawn Planes
 	m_physicsScene->addActor(new Plane(glm::vec2(0, 1), -40));
@@ -68,9 +69,13 @@ void Application2D::update(float deltaTime) {
 	float camPosY;
 	m_2dRenderer->getCameraPos(camPosX, camPosY);
 
-	if (input->wasKeyPressed(aie::INPUT_KEY_SPACE)) {
-		Sphere* ball1 = new Sphere(glm::vec2(20, 0), glm::vec2(-30, 0), 4.0f, 3, 1, glm::vec4(1, 0, 0, 1));
+	if (input->wasKeyPressed(aie::INPUT_KEY_X)) {
+		Sphere* ball1 = new Sphere(glm::vec2(20, 0), glm::vec2(-30, 0), 4.0f, 3, 1, .3f, .3f, glm::vec4(1, 0, 0, 1));
 		m_physicsScene->addActor(ball1);
+	}
+
+	if (input->wasKeyPressed(aie::INPUT_KEY_Z)) {
+		m_physicsScene->addActor(new Box(glm::vec2(3, 3), glm::vec2(0, 0), glm::vec2(2, 0), 45, 10, 1, .3f, .3f, glm::vec4(0, 1, 0, 1)));
 	}
 
 	m_2dRenderer->setCameraPos(camPosX, camPosY);

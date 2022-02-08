@@ -17,10 +17,13 @@ public:
 	virtual void fixedUpdate(glm::vec2 gravity, float timeStep) = 0;
 	virtual void draw() = 0;
 	virtual void resetPosition() {};
+
 	virtual float getEnergy() { return 0; }
+	float getElasticity() { return m_elasticity; }
 	ShapeType getShapeID() { return m_shapeID; }
 
 protected:
+	float m_elasticity = 1;
 	ShapeType m_shapeID;
 	glm::vec4 m_colour;
 };
