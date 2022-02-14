@@ -17,6 +17,10 @@ public:
 	virtual void update(float deltaTime);
 	virtual void draw();
 
+	void SpawnBounceTest();
+	void SpawnContactForceTest();
+	void SpawnSpringTest();
+
 protected:
 
 	aie::Renderer2D*	m_2dRenderer;

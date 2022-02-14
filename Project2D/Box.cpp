@@ -9,17 +9,6 @@ Box::Box(glm::vec2 extents, glm::vec2 position, glm::vec2 velocity, float orient
 	m_colour = colour;
 }
 
-void Box::fixedUpdate(glm::vec2 gravity, float timeStep)
-{
-	Rigidbody::fixedUpdate(gravity, timeStep);
-
-	//store the local axes 
-	float cs = cosf(m_orientation);
-	float sn = sinf(m_orientation);
-	m_localX = glm::normalize(glm::vec2(cs, sn));
-	m_localY = glm::normalize(glm::vec2(-sn, cs));
-}
-
 void Box::draw()
 {
 	// if only using rotation 
@@ -76,9 +65,10 @@ bool Box::checkBoxCorners(const Box& box, glm::vec2& contact, int& numContacts, 
 
 	// if we lie entirely to one side of the box along one axis, we've found a separating
 		// axis, and we can exit 
-		if (maxX <= -m_extents.x || minX >= m_extents.x ||
-			maxY <= -m_extents.y || minY >= m_extents.y)
-			return false;
+	if (maxX <= -m_extents.x || minX >= m_extents.x ||
+		maxY <= -m_extents.y || minY >= m_extents.y)
+		return false;
+
 	if (numLocalContacts == 0)
 		return false;
 

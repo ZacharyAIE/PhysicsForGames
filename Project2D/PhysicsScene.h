@@ -24,7 +24,7 @@ public:
 	float getTotalEnergy();
 
 	void setTimeStep(const float timeStep) { m_timeStep = timeStep; }
-	float getTimeStep() const { return m_timeStep; }
+	float getTimeStep() { return m_timeStep; }
 
 	static bool plane2Plane(PhysicsObject* obj1, PhysicsObject* obj2) { return false; }
 	static bool plane2Sphere(PhysicsObject* obj1, PhysicsObject* obj2);
@@ -35,6 +35,9 @@ public:
 	static bool box2Sphere(PhysicsObject* obj1, PhysicsObject* obj2);
 	static bool sphere2Box(PhysicsObject* obj1, PhysicsObject* obj2);
 	static bool box2Box(PhysicsObject* obj1, PhysicsObject* obj2);
+
+	static void ApplyContactForces(Rigidbody* body1, Rigidbody* body2, glm::vec2 norm, float pen);
+
 	
 	
 

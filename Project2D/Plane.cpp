@@ -1,4 +1,5 @@
 #include "Plane.h"
+#include "PhysicsScene.h"
 
 Plane::Plane(glm::vec2 normal, float distance) : PhysicsObject(PLANE)
 {
@@ -58,6 +59,9 @@ void Plane::resolveCollision(Rigidbody* actor2, glm::vec2 contact)
 	float kePre = actor2->getKineticEnergy();
 
 	actor2->applyForce(force, contact - actor2->getPosition());
+
+	float pen = glm::dot(contact, m_normal) - m_distanceToOrigin;
+	PhysicsScene::ApplyContactForces(actor2, nullptr, m_normal, pen);
 
 	float kePost = actor2->getKineticEnergy();
 
