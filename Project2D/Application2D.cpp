@@ -27,9 +27,9 @@ bool Application2D::startup() {
 	m_physicsScene->setGravity(glm::vec2(0,-10));
 	m_physicsScene->setTimeStep(0.01f);
 
-	//SpawnBounceTest();
+	SpawnBounceTest();
 	//SpawnContactForceTest();
-	SpawnSpringTest();
+	//SpawnSpringTest();
 
 	//Spawn Planes
 	m_physicsScene->addActor(new Plane(glm::vec2(0, 1), -40));
