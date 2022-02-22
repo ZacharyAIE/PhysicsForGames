@@ -1,5 +1,28 @@
 #include "Spring.h"
 #include "PhysicsScene.h"
+#include "Gizmos.h"
+
+
+Spring::Spring(Rigidbody* body1, Rigidbody* body2, float damping, float springCoefficient, float restLength, glm::vec2 contact1, glm::vec2 contact2) : PhysicsObject(JOINT)
+{
+	m_body1 = body1;
+	m_body2 = body2;
+	m_contact1 = contact1;
+	m_contact2 = contact2;
+
+	if (restLength == 0)
+	{
+		// make sure the axes are up to date TODO
+		body1->updateAxes();
+		body2->updateAxes();
+
+		restLength = glm::distance(getContact1(), getContact2());
+	}
+	m_restLength = restLength;
+	m_springCoefficient = springCoefficient;
+	m_damping = damping;
+	
+}
 
 void Spring::fixedUpdate(glm::vec2 gravity, float timeStep)
 {
@@ -15,6 +38,11 @@ void Spring::fixedUpdate(glm::vec2 gravity, float timeStep)
 		m_damping * relativeVelocity;
 	m_body1->applyForce(-force * timeStep, p1 - m_body1->getPosition());
 	m_body2->applyForce(force * timeStep, p2 - m_body2->getPosition());
+}
+
+void Spring::draw()
+{
+	aie::Gizmos::add2DLine(getContact1(), getContact2(), glm::vec4(1, 1, 1, 1));
 }
 
 glm::vec2 Spring::getContact1()

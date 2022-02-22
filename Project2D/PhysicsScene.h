@@ -3,9 +3,8 @@
 #include "glm/geometric.hpp"
 #include <vector>
 #include "PhysicsObject.h"
-#include "Sphere.h"
-#include "Plane.h"
-#include "Box.h"
+
+class Rigidbody;
 
 class PhysicsScene
 {

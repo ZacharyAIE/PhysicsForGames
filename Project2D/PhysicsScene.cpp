@@ -1,4 +1,8 @@
 #include "PhysicsScene.h"
+#include "Sphere.h"
+#include "Plane.h"
+#include "Box.h"
+#include "Spring.h"
 
 glm::vec2 PhysicsScene::m_gravity(0, 0);
 
@@ -284,6 +288,9 @@ void PhysicsScene::checkForCollision()
    PhysicsObject* object2 = m_actors[inner]; 
    int shapeId1 = object1->getShapeID(); 
    int shapeId2 = object2->getShapeID(); 
+
+   if (shapeId1 < 0 || shapeId2 < 0)
+	   continue;
  
    // using function pointers 
    int functionIdx = (shapeId1 * SHAPE_COUNT) + shapeId2; 

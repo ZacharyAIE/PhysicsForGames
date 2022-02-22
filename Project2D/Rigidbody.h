@@ -32,6 +32,7 @@ public:
 
     glm::vec2 getLocalX() { return m_localX; }
     glm::vec2 getLocalY() { return m_localY; }
+    void updateAxes();
 
     bool isKinematic() { return m_isKinematic; }
     

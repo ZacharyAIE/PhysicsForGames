@@ -3,6 +3,11 @@
 #include "Font.h"
 #include "Input.h"
 #include "glm/ext.hpp"
+#include "SoftBody.h"
+#include "Sphere.h"
+#include "Plane.h"
+#include "Box.h"
+#include "Spring.h"
 #include <Gizmos.h>
 
 Application2D::Application2D() {
@@ -27,15 +32,36 @@ bool Application2D::startup() {
 	m_physicsScene->setGravity(glm::vec2(0,-10));
 	m_physicsScene->setTimeStep(0.01f);
 
-	SpawnBounceTest();
+	//SpawnBounceTest();
 	//SpawnContactForceTest();
-	//SpawnSpringTest();
+	//Rope(2);
+
+	std::vector<std::string> sb;
+	sb.push_back("000000");
+	sb.push_back("000000");
+	sb.push_back("00....");
+	sb.push_back("00....");
+	sb.push_back("000000");
+	sb.push_back("000000");
+	SoftBody::Build(m_physicsScene, glm::vec2(-50, 0), 5.0f, 10.0f, 1, sb);
+
+	std::vector<std::string> sc;
+	sc.push_back("..00..");
+	sc.push_back("..00..");
+	sc.push_back("000000");
+	sc.push_back("000000");
+	sc.push_back("..00..");
+	sc.push_back("..00..");
+	SoftBody::Build(m_physicsScene, glm::vec2(0, 0), 5.0f, 10.0f, 1, sc);
+	SoftBody::Build(m_physicsScene, glm::vec2(50, 0), 5.0f, 10.0f, 1, sc);
+
+
 
 	//Spawn Planes
 	m_physicsScene->addActor(new Plane(glm::vec2(0, 1), -40));
-	m_physicsScene->addActor(new Plane(glm::vec2(1, 0), -40));
+	/*m_physicsScene->addActor(new Plane(glm::vec2(1, 0), -40));
 	m_physicsScene->addActor(new Plane(glm::vec2(0, -1), -40));
-	m_physicsScene->addActor(new Plane(glm::vec2(-1, 0), -40));
+	m_physicsScene->addActor(new Plane(glm::vec2(-1, 0), -40));*/
 
 	return true;
 }
@@ -126,8 +152,22 @@ void Application2D::SpawnContactForceTest()
 	
 }
 
-void Application2D::SpawnSpringTest()
+void Application2D::Rope(int num)
 {
-	m_physicsScene->addActor(new Sphere(glm::vec2(0, 0), glm::vec2(0, 0), 10.0f, 3, 1, 0, 0, glm::vec4(1, 0, 1, 1)));
-	m_physicsScene->addActor(new Sphere(glm::vec2(0, -20), glm::vec2(0, 0), 10.0f, 3, 1, 0, 0, glm::vec4(1, 0, 0, 1)));
+	Sphere* prev = nullptr;
+	for (int i = 0; i < num; i++)
+	{
+		// spawn a sphere to the right and below the previous one, so that the whole rope acts under   swings
+			Sphere* sphere = new Sphere(glm::vec2(i * 5, 30 - i * 10), glm::vec2(0), 10, 3, 1, 0, 0, glm::vec4(0, 1, 0, 1));
+		if (i == 0)
+			sphere->setKinematic(true);
+		m_physicsScene->addActor(sphere);
+		if (prev)
+			m_physicsScene->addActor(new Spring(sphere, prev, 7, 500));
+		prev = sphere;
+	}
+	// add a kinematic box at an angle for the rope to drape over
+	Box* box = new Box(glm::vec2(0, -20), glm::vec2(0), glm::vec2(8, 2), 45, 10, 1, .3f, .3f, glm::vec4(1, 0, 0, 1));
+	box->setKinematic(true);
+	m_physicsScene->addActor(box);
 }

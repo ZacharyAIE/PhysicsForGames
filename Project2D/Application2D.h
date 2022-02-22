@@ -19,7 +19,7 @@ public:
 
 	void SpawnBounceTest();
 	void SpawnContactForceTest();
-	void SpawnSpringTest();
+	void Rope(int num);
 
 protected:
 

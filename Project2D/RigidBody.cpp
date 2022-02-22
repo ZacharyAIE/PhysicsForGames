@@ -15,10 +15,7 @@ Rigidbody::Rigidbody(ShapeType shapeID, glm::vec2 position, glm::vec2 velocity, 
 
 void Rigidbody::fixedUpdate(glm::vec2 gravity, float timeStep)
 {
-	float cs = cosf(m_orientation);
-	float sn = sinf(m_orientation);
-	m_localX = glm::normalize(glm::vec2(cs, sn));
-	m_localY = glm::normalize(glm::vec2(-sn, cs));
+	updateAxes();
 
 	if (m_isKinematic) 
 	{
@@ -64,6 +61,14 @@ float Rigidbody::getPotentialEnergy()
 glm::vec2 Rigidbody::toWorld(glm::vec2 pos)
 {
 	return m_position + getLocalX() * pos.x + getLocalY() * pos.y;
+}
+
+void Rigidbody::updateAxes()
+{
+	float cs = cosf(m_orientation);
+	float sn = sinf(m_orientation);
+	m_localX = glm::normalize(glm::vec2(cs, sn));
+	m_localY = glm::normalize(glm::vec2(-sn, cs));
 }
 
 void Rigidbody::resolveCollision(Rigidbody* actor2, glm::vec2 contact, glm::vec2* collisionNormal = nullptr, float pen = 0)
