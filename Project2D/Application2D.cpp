@@ -32,36 +32,16 @@ bool Application2D::startup() {
 	m_physicsScene->setGravity(glm::vec2(0,-10));
 	m_physicsScene->setTimeStep(0.01f);
 
-	//SpawnBounceTest();
+	SpawnBounceTest();
 	//SpawnContactForceTest();
 	//Rope(2);
-
-	std::vector<std::string> sb;
-	sb.push_back("000000");
-	sb.push_back("000000");
-	sb.push_back("00....");
-	sb.push_back("00....");
-	sb.push_back("000000");
-	sb.push_back("000000");
-	SoftBody::Build(m_physicsScene, glm::vec2(-50, 0), 5.0f, 10.0f, 1, sb);
-
-	std::vector<std::string> sc;
-	sc.push_back("..00..");
-	sc.push_back("..00..");
-	sc.push_back("000000");
-	sc.push_back("000000");
-	sc.push_back("..00..");
-	sc.push_back("..00..");
-	SoftBody::Build(m_physicsScene, glm::vec2(0, 0), 5.0f, 10.0f, 1, sc);
-	SoftBody::Build(m_physicsScene, glm::vec2(50, 0), 5.0f, 10.0f, 1, sc);
-
 
 
 	//Spawn Planes
 	m_physicsScene->addActor(new Plane(glm::vec2(0, 1), -40));
-	/*m_physicsScene->addActor(new Plane(glm::vec2(1, 0), -40));
+	m_physicsScene->addActor(new Plane(glm::vec2(1, 0), -40));
 	m_physicsScene->addActor(new Plane(glm::vec2(0, -1), -40));
-	m_physicsScene->addActor(new Plane(glm::vec2(-1, 0), -40));*/
+	m_physicsScene->addActor(new Plane(glm::vec2(-1, 0), -40));
 
 	return true;
 }
@@ -170,4 +150,26 @@ void Application2D::Rope(int num)
 	Box* box = new Box(glm::vec2(0, -20), glm::vec2(0), glm::vec2(8, 2), 45, 10, 1, .3f, .3f, glm::vec4(1, 0, 0, 1));
 	box->setKinematic(true);
 	m_physicsScene->addActor(box);
+}
+
+void Application2D::SpringTest()
+{
+	std::vector<std::string> sb;
+	sb.push_back("000000");
+	sb.push_back("000000");
+	sb.push_back("00....");
+	sb.push_back("00....");
+	sb.push_back("000000");
+	sb.push_back("000000");
+	SoftBody::Build(m_physicsScene, glm::vec2(-50, 0), 5.0f, 10.0f, 1, sb);
+
+	std::vector<std::string> sc;
+	sc.push_back("..00..");
+	sc.push_back("..00..");
+	sc.push_back("000000");
+	sc.push_back("000000");
+	sc.push_back("..00..");
+	sc.push_back("..00..");
+	SoftBody::Build(m_physicsScene, glm::vec2(0, 0), 5.0f, 10.0f, 1, sc);
+	SoftBody::Build(m_physicsScene, glm::vec2(50, 0), 5.0f, 10.0f, 1, sc);
 }
