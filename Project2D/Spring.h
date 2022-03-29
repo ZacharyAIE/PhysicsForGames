@@ -2,6 +2,9 @@
 #include "PhysicsObject.h"
 #include "Rigidbody.h"
 
+/// <summary>
+/// This class is responsible for the creation of a spring object. A spring holds two objects together with a force that binds them to a fixed distance with a variable amount of springiness.
+/// </summary>
 class Spring :
     public PhysicsObject
 {

@@ -32,18 +32,33 @@ bool Application2D::startup() {
 	m_physicsScene->setGravity(glm::vec2(0,-10));
 	m_physicsScene->setTimeStep(0.01f);
 
-	SpawnBounceTest();
+	SpringTest();
 	//SpawnContactForceTest();
 	//Rope(2);
 
 
 	//Spawn Planes
-	m_physicsScene->addActor(new Plane(glm::vec2(0, 1), -40));
-	m_physicsScene->addActor(new Plane(glm::vec2(1, 0), -40));
-	m_physicsScene->addActor(new Plane(glm::vec2(0, -1), -40));
-	m_physicsScene->addActor(new Plane(glm::vec2(-1, 0), -40));
+	m_physicsScene->addActor(new Plane(glm::vec2(0, 1), -45));
+	m_physicsScene->addActor(new Plane(glm::vec2(1, 0), -80));
+	m_physicsScene->addActor(new Plane(glm::vec2(0, -1), -50));
+	m_physicsScene->addActor(new Plane(glm::vec2(-1, 0), -80));
 
 	return true;
+}
+
+glm::vec2 Application2D::screenToWorld(glm::vec2 screenPos)
+{
+	glm::vec2 worldPos = screenPos;
+
+	// move the centre of the screen to (0,0) 
+	worldPos.x -= getWindowWidth() / 2;
+	worldPos.y -= getWindowHeight() / 2;
+
+	// scale according to our extents 
+	worldPos.x *= 2.0f * extents / getWindowWidth();
+	worldPos.y *= 2.0f * extents / (aspectRatio * getWindowHeight());
+
+	return worldPos;
 }
 
 void Application2D::shutdown() {
@@ -64,13 +79,23 @@ void Application2D::update(float deltaTime) {
 	float camPosY;
 	m_2dRenderer->getCameraPos(camPosX, camPosY);
 
-	if (input->wasKeyPressed(aie::INPUT_KEY_X)) {
-		Sphere* ball1 = new Sphere(glm::vec2(20, 0), glm::vec2(-30, 0), 4.0f, 3, 1, .3f, .3f, glm::vec4(1, 0, 0, 1));
-		m_physicsScene->addActor(ball1);
+	// SPAWN SPHERES WHEN LEFT MOUSE BUTTON IS DOWN
+	if (input->wasMouseButtonPressed(0)) {
+		int xScreen, yScreen;
+		input->getMouseXY(&xScreen, &yScreen);
+		glm::vec2 worldPos = screenToWorld(glm::vec2(xScreen, yScreen));
+
+		Sphere* sphere = new Sphere(worldPos, glm::vec2(glm::linearRand(-100, 100), glm::linearRand(-100, 100)), 10.0f, 3, 1, 0, 0, glm::vec4(1, 0, 1, 1));
+		//sphere->setKinematic(true);
+		m_physicsScene->addActor(sphere);
 	}
 
-	if (input->wasKeyPressed(aie::INPUT_KEY_Z)) {
-		m_physicsScene->addActor(new Box(glm::vec2(3, 3), glm::vec2(0, 0), glm::vec2(2, 0), 45, 10, 1, .3f, .3f, glm::vec4(0, 1, 0, 1)));
+	// SPAWN BOXES WHEN LEFT MOUSE BUTTON IS DOWN
+	if (input->wasMouseButtonPressed(1)) {
+		int xScreen, yScreen;
+		input->getMouseXY(&xScreen, &yScreen);
+		glm::vec2 worldPos = screenToWorld(glm::vec2(xScreen, yScreen));
+		m_physicsScene->addActor(new Box(glm::vec2(3, 3), worldPos, glm::vec2(glm::linearRand(-100, 100), glm::linearRand(-100, 100)), 45, 10, 1, .3f, .3f, glm::vec4(0, 1, 0, 1)));
 	}
 
 	m_2dRenderer->setCameraPos(camPosX, camPosY);
@@ -94,9 +119,8 @@ void Application2D::draw() {
 	m_2dRenderer->begin();
 	
 	// draw your stuff here! 
-	static float aspectRatio = 16 / 9.f;
-	aie::Gizmos::draw2D(glm::ortho<float>(-100, 100,
-		-100 / aspectRatio, 100 / aspectRatio, -1.0f, 1.0f));
+	aie::Gizmos::draw2D(glm::ortho<float>(-extents, extents, -extents / aspectRatio,
+		extents / aspectRatio, -1.0f, 1.0f));
 
 	// output some text, uses the last used colour
 	char fps[32];

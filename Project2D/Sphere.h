@@ -3,6 +3,9 @@
 #include "Gizmos.h"
 #include <glm/vec4.hpp>
 
+/// <summary>
+/// This class is responible for storing the information needed for the simulation of a sphere object. A Rigidbody with a centre point and a radius.
+/// </summary>
 class Sphere :
     public Rigidbody
 {

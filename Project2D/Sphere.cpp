@@ -5,6 +5,7 @@ Sphere::Sphere(glm::vec2 position, glm::vec2 velocity, float mass, float radius,
 	Rigidbody(SPHERE, position, velocity, 0, mass, elasticity, linearDrag, angularDrag)
 {
 	m_radius = radius;
+	m_moment = 0.5f * mass * radius * radius;
 	m_colour = colour;
 }
 

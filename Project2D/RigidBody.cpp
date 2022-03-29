@@ -11,6 +11,7 @@ Rigidbody::Rigidbody(ShapeType shapeID, glm::vec2 position, glm::vec2 velocity, 
 	m_angularVelocity = 0;
 	m_linearDrag = linearDrag;
 	m_angularDrag = angularDrag;
+	updateAxes();
 }
 
 void Rigidbody::fixedUpdate(glm::vec2 gravity, float timeStep)
